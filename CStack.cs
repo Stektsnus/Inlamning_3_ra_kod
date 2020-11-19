@@ -20,6 +20,18 @@ namespace Inlamning_3_ra_kod
     public class CStack
     {
         public double X, Y, Z, T;
+        public Dictionary<string, double> variables = new Dictionary<string, double>()
+        {
+            {"A", 0},
+            {"B", 0},
+            {"C", 0},
+            {"D", 0},
+            {"E", 0},
+            {"F", 0},
+            {"G", 0},
+            {"H", 0}
+        };
+        public string chosenVariable;
         public string entry;
         /* CONSTRUCTOR: CStack
          * PURPOSE: create a new stack and init X, Y, Z, T and the text entry
@@ -56,7 +68,7 @@ namespace Inlamning_3_ra_kod
          */
         public string VarString()
         {
-            return "insertme";
+            return $"{variables["A"]}\n{variables["B"]}\n{variables["C"]}\n{variables["D"]}\n{variables["E"]}\n{variables["F"]}\n{variables["G"]}\n{variables["H"]}";
         }
         /* METHOD: SetX
          * PURPOSE: set X with overwrite
@@ -249,17 +261,18 @@ namespace Inlamning_3_ra_kod
          */
         public void SetAddress(string name)
         {
-
+            chosenVariable = name;
         }
         /* METHOD: SetVar
-         * PURPOSE: 
-         * PARAMETERS: --
+         * PURPOSE: Set the chosen variable to the same as the button clicked
+         * PARAMETERS: string name - name of the button pressed
          * RETURNS: --
          * FEATURES: NOT YET IMPLEMENTED
          */
         public void SetVar()
         {
-
+            variables[chosenVariable] = X;
+            VarString();
         }
         /* METHOD: GetVar
          * PURPOSE: 
@@ -269,7 +282,7 @@ namespace Inlamning_3_ra_kod
          */
         public void GetVar()
         {
-
+            RollSetX(variables[chosenVariable]);
         }
     }
 }
