@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,19 +21,16 @@ namespace Inlamning_3_ra_kod
     public class CStack
     {
         public double X, Y, Z, T;
-        public Dictionary<string, double> variables = new Dictionary<string, double>()
-        {
-            {"A", 0},
-            {"B", 0},
-            {"C", 0},
-            {"D", 0},
-            {"E", 0},
-            {"F", 0},
-            {"G", 0},
-            {"H", 0}
-        };
+        public Dictionary<string, double> variables = new Dictionary<string, double>();
         public string chosenVariable;
         public string entry;
+
+        /* This is the file path for the stored information file. 
+           It is currently ought to be placed in the root folder of the project,
+           but you can change this to any other file path you like.
+        */
+        string filePath = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "molkfreecalc.clc";
+
         /* CONSTRUCTOR: CStack
          * PURPOSE: create a new stack and init X, Y, Z, T and the text entry
          * PARAMETERS: --
@@ -41,12 +39,68 @@ namespace Inlamning_3_ra_kod
         {
             X = Y = Z = T = 0;
             entry = "";
+            variables.Add("A", 0);
+            variables.Add("B", 0);
+            variables.Add("C", 0);
+            variables.Add("D", 0);
+            variables.Add("E", 0);
+            variables.Add("F", 0);
+            variables.Add("G", 0);
+            variables.Add("H", 0);
+
+            if (File.Exists(filePath) == true)
+            {
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    string line;
+                    string[] splitLine;
+                    while ((line = sr.ReadLine()) != null) 
+                    {
+                        splitLine = line.Split(' ');
+                        try
+                        {
+                            switch (splitLine[0].ToString())
+                            {
+                                case "X":
+                                    X = double.Parse(splitLine[1]);
+                                    break;
+                                case "Y":
+                                    Y = double.Parse(splitLine[1]);
+                                    break;
+                                case "Z":
+                                    Z = double.Parse(splitLine[1]);
+                                    break;
+                                case "T":
+                                    T = double.Parse(splitLine[1]);
+                                    break;
+                                case "A":
+                                case "B":
+                                case "C":
+                                case "D":
+                                case "E":
+                                case "F":
+                                case "G":
+                                case "H":
+                                    variables[splitLine[0].ToString()] = double.Parse(splitLine[1]);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
         }
         /* METHOD: Exit
          * PURPOSE: called on exit, prepared for saving
          * PARAMETERS: --
          * RETURNS: --
          */
+        //public CStack(filename)
         public void Exit()
         {
 
