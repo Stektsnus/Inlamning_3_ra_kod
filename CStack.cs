@@ -103,7 +103,21 @@ namespace Inlamning_3_ra_kod
         //public CStack(filename)
         public void Exit()
         {
-
+            using (StreamWriter sr = new StreamWriter(filePath))
+            {
+                sr.WriteLine($"X {X}");
+                sr.WriteLine($"Y {Y}");
+                sr.WriteLine($"Z {Z}");
+                sr.WriteLine($"T {T}");
+                sr.WriteLine($"A {variables["A"]}");
+                sr.WriteLine($"B {variables["B"]}");
+                sr.WriteLine($"C {variables["C"]}");
+                sr.WriteLine($"D {variables["D"]}");
+                sr.WriteLine($"E {variables["E"]}");
+                sr.WriteLine($"F {variables["F"]}");
+                sr.WriteLine($"G {variables["G"]}");
+                sr.WriteLine($"H {variables["H"]}");
+            }
         }
         /* METHOD: StackString
          * PURPOSE: construct a string to write out in a stack view
